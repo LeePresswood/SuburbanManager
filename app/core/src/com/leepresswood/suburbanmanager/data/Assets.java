@@ -1,6 +1,7 @@
 package com.leepresswood.suburbanmanager.data;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
 
 public class Assets extends AssetManager
 {
@@ -9,7 +10,7 @@ public class Assets extends AssetManager
 	{
 		
 		//Textures
-		//load("person/textures/hold.png", Texture.class);
+		load("hold.png", Texture.class);
 	}
 	
 	public void destroy()

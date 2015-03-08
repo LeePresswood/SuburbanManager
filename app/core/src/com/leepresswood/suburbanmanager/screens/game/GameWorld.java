@@ -15,15 +15,16 @@ public class GameWorld
 	public OrthographicCamera camera;
 	
 	//Bounds of the camera. These are in relation to the camera's center. Said another way, these are the extreme positions of the camera's movement. You may not move further left than WORLD_LEFT.
-	public int WORLD_TOTAL_HORIZONTAL, WORLD_TOTAL_VERTICAL;
-	public float WORLD_VIEW = 15f;
-	public float WORLD_LEFT, WORLD_RIGHT, WORLD_TOP, WORLD_BOTTOM;	
+	public int world_total_horizontal, world_total_vertical;
+	private float world_view = 15f;
+	private float world_left, world_right, world_top, world_bottom;	
 	
-	private boolean CAMERA_ZOOM_CHANGED;								//Determines if zoom has changed.
-	private float CAMERA_ZOOM = 0.0f;									//Amount added to the world camera's zoom.
-	private float CAMERA_ZOOM_JUMP = 0.5f;								//Amount zoom changes by with each zoom request.
-	private float CAMERA_ZOOM_MAX = 2.0f;								//Max amount the player can zoom in.
-	private float CAMERA_ZOOM_MIN = -CAMERA_ZOOM_MAX;				//Min amount the player can zoom in. In other words, max zoom out.
+	//Camera zoom variables.
+	private boolean camera_zoom_has_changed;							//Determines if zoom has changed.
+	private float camera_zoom = 0.0f;									//Amount added to the world camera's zoom.
+	private float camera_zoom_jump = 0.5f;								//Amount zoom changes by with each zoom request.
+	private float camera_zoom_max = 2.0f;								//Max amount the player can zoom out.
+	private float camera_zoom_min = -camera_zoom_max;				//Min amount the player can zoom out. In other words, max zoom in.
 	
 	//Game Objects
 	public ArrayList<Object> remove;
@@ -42,14 +43,14 @@ public class GameWorld
 	private void setUpWorld()
 	{		
 		//Set the bounds of the camera.
-		camera = new OrthographicCamera(Gdx.graphics.getWidth() / WORLD_VIEW, Gdx.graphics.getHeight() / WORLD_VIEW);
+		camera = new OrthographicCamera(Gdx.graphics.getWidth() / world_view, Gdx.graphics.getHeight() / world_view);
 		
 		//Set the bounds of the whole world.
-		WORLD_TOTAL_HORIZONTAL = 20;
-		WORLD_TOTAL_VERTICAL = 20;
+		world_total_horizontal = 20;
+		world_total_vertical = 20;
 		
 		//Calculate the position of the camera.
-		CAMERA_ZOOM_CHANGED = true;
+		camera_zoom_has_changed = true;
 		setCameraBounds();
 		
 		//Display information.
@@ -63,6 +64,8 @@ public class GameWorld
 	{
 		//Set up highway.
 		
+		
+		remove = new ArrayList<Object>();
 	}
 	
 	public void update(float delta)
@@ -80,32 +83,32 @@ public class GameWorld
 	private void setCameraBounds()
 	{
 		//Any zooming will have an effect on the bounds. Recalculate them if necessary.
-		if(CAMERA_ZOOM_CHANGED)
+		if(camera_zoom_has_changed)
 		{
 			//Change the camera's zoom to the new value.
-			camera.zoom = CAMERA_ZOOM;
-			CAMERA_ZOOM_CHANGED = false;
+			camera.zoom = camera_zoom;
+			camera_zoom_has_changed = false;
 			camera.update();
 			
 			//Update bounds.
-			WORLD_BOTTOM = camera.zoom * camera.viewportHeight / 2f;
-			WORLD_TOP = WORLD_TOTAL_VERTICAL - WORLD_BOTTOM;
-			WORLD_LEFT = camera.zoom * camera.viewportWidth / 2f;
-			WORLD_RIGHT = WORLD_TOTAL_HORIZONTAL - WORLD_LEFT;
+			world_bottom = camera.zoom * camera.viewportHeight / 2f;
+			world_top = world_total_vertical - world_bottom;
+			world_left = camera.zoom * camera.viewportWidth / 2f;
+			world_right = world_total_horizontal - world_left;
 		}
 		
 		//If this moves off the world's bounds, correct it.
 		//X
-		if(camera.position.x < WORLD_LEFT)
-			camera.position.x = WORLD_LEFT;
-		else if(camera.position.x > WORLD_RIGHT)
-			camera.position.x = WORLD_RIGHT;
+		if(camera.position.x < world_left)
+			camera.position.x = world_left;
+		else if(camera.position.x > world_right)
+			camera.position.x = world_right;
 		
 		//Y
-		if(camera.position.y < WORLD_BOTTOM)
-			camera.position.y = WORLD_BOTTOM;
-		else if(camera.position.y > WORLD_TOP)
-			camera.position.y = WORLD_TOP;
+		if(camera.position.y < world_bottom)
+			camera.position.y = world_bottom;
+		else if(camera.position.y > world_top)
+			camera.position.y = world_top;
 		
 		camera.update();
 	}
@@ -118,18 +121,18 @@ public class GameWorld
 	{
 		if(zoom_in)
 		{
-			CAMERA_ZOOM -= CAMERA_ZOOM_JUMP;
-			if(CAMERA_ZOOM < CAMERA_ZOOM_MIN)
-				CAMERA_ZOOM = CAMERA_ZOOM_MIN;
+			camera_zoom -= camera_zoom_jump;
+			if(camera_zoom < camera_zoom_min)
+				camera_zoom = camera_zoom_min;
 		}
 		else
 		{
-			CAMERA_ZOOM += CAMERA_ZOOM_JUMP;
-			if(CAMERA_ZOOM > CAMERA_ZOOM_MAX)
-				CAMERA_ZOOM = CAMERA_ZOOM_MAX;
+			camera_zoom += camera_zoom_jump;
+			if(camera_zoom > camera_zoom_max)
+				camera_zoom = camera_zoom_max;
 		}
 		
-		CAMERA_ZOOM_CHANGED = true;
+		camera_zoom_has_changed = true;
 	}
 	
 	/**
