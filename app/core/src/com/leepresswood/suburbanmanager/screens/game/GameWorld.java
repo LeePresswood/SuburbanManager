@@ -19,8 +19,8 @@ public class GameWorld
 	public float WORLD_VIEW = 15f;
 	public float WORLD_LEFT, WORLD_RIGHT, WORLD_TOP, WORLD_BOTTOM;	
 	
-	public float CAMERA_ZOOM = 0.0f;										//Amount added to the world camera's zoom.
-	private float CAMERA_ZOOM_LAST = 0.0f;								//
+	private boolean CAMERA_ZOOM_CHANGED;								//Determines if zoom has changed.
+	private float CAMERA_ZOOM = 0.0f;									//Amount added to the world camera's zoom.
 	private float CAMERA_ZOOM_JUMP = 0.5f;								//Amount zoom changes by with each zoom request.
 	private float CAMERA_ZOOM_MAX = 2.0f;								//Max amount the player can zoom in.
 	private float CAMERA_ZOOM_MIN = -CAMERA_ZOOM_MAX;				//Min amount the player can zoom in. In other words, max zoom out.
@@ -49,6 +49,7 @@ public class GameWorld
 		WORLD_TOTAL_VERTICAL = 20;
 		
 		//Calculate the position of the camera.
+		CAMERA_ZOOM_CHANGED = true;
 		setCameraBounds();
 		
 		//Display information.
@@ -79,11 +80,11 @@ public class GameWorld
 	private void setCameraBounds()
 	{
 		//Any zooming will have an effect on the bounds. Recalculate them if necessary.
-		if(Math.abs(CAMERA_ZOOM - CAMERA_ZOOM_LAST) < 0.001)
+		if(CAMERA_ZOOM_CHANGED)
 		{
 			//Change the camera's zoom to the new value.
 			camera.zoom = CAMERA_ZOOM;
-			CAMERA_ZOOM_LAST = CAMERA_ZOOM;
+			CAMERA_ZOOM_CHANGED = false;
 			camera.update();
 			
 			//Update bounds.
@@ -118,15 +119,17 @@ public class GameWorld
 		if(zoom_in)
 		{
 			CAMERA_ZOOM -= CAMERA_ZOOM_JUMP;
-			if(CAMERA_ZOOM < CAMERA_ZOOM_MAX)
-				CAMERA_ZOOM = CAMERA_ZOOM_MAX;
+			if(CAMERA_ZOOM < CAMERA_ZOOM_MIN)
+				CAMERA_ZOOM = CAMERA_ZOOM_MIN;
 		}
 		else
 		{
 			CAMERA_ZOOM += CAMERA_ZOOM_JUMP;
-			if(CAMERA_ZOOM > CAMERA_ZOOM_MIN)
-				CAMERA_ZOOM = CAMERA_ZOOM_MIN;
+			if(CAMERA_ZOOM > CAMERA_ZOOM_MAX)
+				CAMERA_ZOOM = CAMERA_ZOOM_MAX;
 		}
+		
+		CAMERA_ZOOM_CHANGED = true;
 	}
 	
 	/**
