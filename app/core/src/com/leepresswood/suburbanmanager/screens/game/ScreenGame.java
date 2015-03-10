@@ -22,7 +22,7 @@ public class ScreenGame extends ScreenParent
 	@Override
 	public void setUpBackgroundColor()
 	{
-		color_background = new Color(Color.CYAN);
+		color_background = new Color(Color.BLACK);
 	}
 	
 	@Override
@@ -49,7 +49,6 @@ public class ScreenGame extends ScreenParent
 	@Override
 	public void dispose()
 	{
-		super.dispose();
 		batch.dispose();
 		renderer.dispose();
 	}

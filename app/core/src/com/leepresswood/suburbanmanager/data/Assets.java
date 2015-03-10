@@ -7,8 +7,7 @@ public class Assets extends AssetManager
 {
 	
 	public Assets()
-	{
-		
+	{		
 		//Textures
 		for(int i = 0; i < NUMBER_ROAD; i++)
 			load(PATH_ROAD + "(" + i + ").png", Texture.class);

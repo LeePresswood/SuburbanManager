@@ -3,6 +3,7 @@ package com.leepresswood.suburbanmanager.screens.game;
 import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.leepresswood.suburbanmanager.screens.game.objects.grid.GridManager;
 
 /**
  * Holds information about the game world. Sets up camera based upon this world.
@@ -21,12 +22,13 @@ public class GameWorld
 	
 	//Camera zoom variables.
 	private boolean camera_zoom_has_changed;							//Determines if zoom has changed.
-	private float camera_zoom = 0.0f;									//Amount added to the world camera's zoom.
-	private float camera_zoom_jump = 0.5f;								//Amount zoom changes by with each zoom request.
-	private float camera_zoom_max = 2.0f;								//Max amount the player can zoom out.
-	private float camera_zoom_min = -camera_zoom_max;				//Min amount the player can zoom out. In other words, max zoom in.
+	private float camera_zoom = 0.5f;									//Amount added to the world camera's zoom.
+	private float camera_zoom_jump = 0.25f;							//Amount zoom changes by with each zoom request.
+	private float camera_zoom_max = 1.0f;								//Max amount the player can zoom out.
+	private float camera_zoom_min = camera_zoom_jump;				//Min amount the player can zoom out. In other words, max zoom in.
 	
 	//Game Objects
+	public GridManager manager;
 	public ArrayList<Object> remove;
 	
 	public GameWorld(ScreenGame screen)
@@ -42,14 +44,18 @@ public class GameWorld
 	 */
 	private void setUpWorld()
 	{		
+		//Set the bounds of the whole world.
+		world_total_horizontal = 50;
+		world_total_vertical = 50;
+		
 		//Set the bounds of the camera.
 		camera = new OrthographicCamera(Gdx.graphics.getWidth() / world_view, Gdx.graphics.getHeight() / world_view);
 		
-		//Set the bounds of the whole world.
-		world_total_horizontal = 20;
-		world_total_vertical = 20;
+		
 		
 		//Calculate the position of the camera.
+		camera.position.x = world_total_horizontal / 2f;
+		camera.position.y = world_total_vertical / 2f;
 		camera_zoom_has_changed = true;
 		setCameraBounds();
 		
@@ -62,6 +68,9 @@ public class GameWorld
 	 */
 	private void populateWorld()
 	{
+		//Load tiles.
+		manager = new GridManager(this);
+		
 		//Set up highway.
 		
 		
@@ -99,9 +108,9 @@ public class GameWorld
 		
 		//If this moves off the world's bounds, correct it.
 		//X
-		if(camera.position.x < world_left)
+		if(camera.position.x > world_left)
 			camera.position.x = world_left;
-		else if(camera.position.x > world_right)
+		else if(camera.position.x < world_right)
 			camera.position.x = world_right;
 		
 		//Y
@@ -161,11 +170,11 @@ public class GameWorld
 	}
 	
 	public void draw()
-	{		
+	{System.out.println(camera.position);
 		//Game objects
 		screen.batch.setProjectionMatrix(camera.combined);
 		screen.batch.begin();
-			
+			manager.draw();
 		screen.batch.end();
 	}
 }

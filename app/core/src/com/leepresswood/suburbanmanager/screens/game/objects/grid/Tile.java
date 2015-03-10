@@ -1,5 +1,8 @@
 package com.leepresswood.suburbanmanager.screens.game.objects.grid;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
 /**
  * The individual parts of the game map. Objects sit on AxB tiles, where A is the vertical height and B is the horizontal height.
  * The sizes are integer values in reference to the bottom-left tile of the game object. Put another way, the game's objects have an integer position
@@ -10,9 +13,9 @@ package com.leepresswood.suburbanmanager.screens.game.objects.grid;
 public class Tile
 {
 	private GridManager manager;
-	
-	//Position of the tile.
-	public int x, y;
+
+	public Sprite sprite;
+	private int x, y;
 	
 	//Object information. 
 	//Number is the position in the GameObject array in GridManager.
@@ -26,6 +29,7 @@ public class Tile
 	public Tile(GridManager manager, int x, int y)
 	{
 		this.manager = manager;
+		
 		this.x = x;
 		this.y = y;
 		
@@ -35,6 +39,12 @@ public class Tile
 	public boolean isFree()
 	{
 		return object_number == -1;
+	}
+	
+	public void setTileTexture(Texture t)
+	{
+		sprite = new Sprite(t);
+		sprite.setBounds(x, y, 1, 1);
 	}
 	
 	public void setObject(int num, int x, int y)
@@ -64,9 +74,7 @@ public class Tile
 	
 	public void draw()
 	{
-		if(!isFree())
-		{
-			
-		}
+		if(sprite != null)
+			sprite.draw(manager.world.screen.batch);
 	}
 }
