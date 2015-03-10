@@ -9,9 +9,64 @@ package com.leepresswood.suburbanmanager.screens.game.objects.grid;
  */
 public class Tile
 {
+	private GridManager manager;
 	
-	public Tile()
+	//Position of the tile.
+	public int x, y;
+	
+	//Object information. 
+	//Number is the position in the GameObject array in GridManager.
+	//X and Y are the 0-based tiles within the GameObject. So for example, the
+	//bottom-middle tile of a 2x3 GameObject will have the following data:
+	//object_x = 1
+	//object_y = 0
+	//Counting starts at bottom-left tile.
+	public int object_number, object_x, object_y;
+	
+	public Tile(GridManager manager, int x, int y)
 	{
+		this.manager = manager;
+		this.x = x;
+		this.y = y;
+		
+		clearObject();
 	}
 	
+	public boolean isFree()
+	{
+		return object_number == -1;
+	}
+	
+	public void setObject(int num, int x, int y)
+	{
+		object_number = num;
+		object_x = x;
+		object_y = y;
+	}
+	
+	/**
+	 * Remove tile data and make free.
+	 */
+	public void clearObject()
+	{
+		object_number = -1;
+		object_x = -1;
+		object_y = -1;
+	}
+	
+	public void update(float delta)
+	{
+		if(!isFree())
+		{
+			
+		}
+	}
+	
+	public void draw()
+	{
+		if(!isFree())
+		{
+			
+		}
+	}
 }

@@ -10,7 +10,7 @@ public class GUIGame
 	
 	public GUIGame(ScreenGame screen)
 	{
-		this.screen = screen;	
+		this.screen = screen;
 				
 		makeCamera();
 	}
@@ -24,14 +24,6 @@ public class GUIGame
 		camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
 		camera.update();
 	}
-	
-	/**
-	 * Draw all parts of the GUI.
-	 */
-	public void draw()
-	{
-		
-	}
 
 	/**
 	 * Update required things.
@@ -39,5 +31,13 @@ public class GUIGame
 	 */
 	public void update(float delta)
 	{
+	}
+	
+	/**
+	 * Draw all parts of the GUI.
+	 */
+	public void draw()
+	{
+		
 	}
 }
