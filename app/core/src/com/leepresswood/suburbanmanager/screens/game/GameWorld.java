@@ -24,7 +24,7 @@ public class GameWorld
 	private boolean camera_zoom_has_changed;							//Determines if zoom has changed.
 	private float camera_zoom = 0.5f;									//Amount added to the world camera's zoom.
 	private float camera_zoom_jump = 0.25f;							//Amount zoom changes by with each zoom request.
-	private float camera_zoom_max = 1.0f;								//Max amount the player can zoom out.
+	private float camera_zoom_max = 20.0f;								//Max amount the player can zoom out.
 	private float camera_zoom_min = camera_zoom_jump;				//Min amount the player can zoom out. In other words, max zoom in.
 	
 	//Game Objects
@@ -110,13 +110,13 @@ public class GameWorld
 		//X
 		if(camera.position.x > world_left)
 			camera.position.x = world_left;
-		else if(camera.position.x < world_right)
+		if(camera.position.x < world_right)
 			camera.position.x = world_right;
 		
 		//Y
-		if(camera.position.y < world_bottom)
+		if(camera.position.y > world_bottom)
 			camera.position.y = world_bottom;
-		else if(camera.position.y > world_top)
+		if(camera.position.y < world_top)
 			camera.position.y = world_top;
 		
 		camera.update();
