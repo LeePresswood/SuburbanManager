@@ -10,7 +10,12 @@ public class Assets extends AssetManager
 	{
 		
 		//Textures
-		load("hold.png", Texture.class);
+		for(int i = 0; i < NUMBER_ROAD; i++)
+			load(PATH_ROAD + "(" + i + ").png", Texture.class);
+		for(int i = 0; i < NUMBER_TERRAIN; i++)
+			load(PATH_TERRAIN + "(" + i + ").png", Texture.class);
+		for(int i = 0; i < NUMBER_WATER; i++)
+			load(PATH_WATER + "(" + i + ").png", Texture.class);
 	}
 	
 	public void destroy()
@@ -21,6 +26,7 @@ public class Assets extends AssetManager
 	//Easy-to-call filenames.
 	//Tiles
 	//Roads
+	public final int NUMBER_ROAD = 19;
 	public final String PATH_ROAD = "tiles/road/";
 	public final String CORNER_DOWN_RIGHT = PATH_ROAD + "(0).png";
 	public final String CORNER_LEFT_BOT = PATH_ROAD + "(1).png";
@@ -43,6 +49,7 @@ public class Assets extends AssetManager
 	public final String HORI = PATH_ROAD + "(18).png";
 	
 	//Terrain
+	public final int NUMBER_TERRAIN = 6;
 	public final String PATH_TERRAIN = "tiles/terrain/";
 	public final String TERRAIN_GRASS = PATH_TERRAIN + "(0).png";
 	public final String TERRAIN_DIRT = PATH_TERRAIN + "(1).png";
@@ -52,6 +59,7 @@ public class Assets extends AssetManager
 	public final String TERRAIN_ROAD = PATH_TERRAIN + "(5).png";
 	
 	//Water
+	public final int NUMBER_WATER = 18;
 	public final String PATH_WATER = "tiles/water/";
 	public final String WATER_CORNER_LEFT_BOT_NO = PATH_WATER + "(0).png";
 	public final String WATER_CORNER_BOT_RIGHT_YES = PATH_WATER + "(1).png";
