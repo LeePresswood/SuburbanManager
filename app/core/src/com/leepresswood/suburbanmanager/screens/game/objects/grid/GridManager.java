@@ -2,6 +2,7 @@ package com.leepresswood.suburbanmanager.screens.game.objects.grid;
 
 import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector3;
 import com.leepresswood.suburbanmanager.screens.game.GameWorld;
 
 /**
@@ -48,6 +49,10 @@ public class GridManager
 		objects = new ArrayList<GridObject>();
 	}
 	
+	/**
+	 * Update all tiles and objects.
+	 * @param delta Change in time.
+	 */
 	public void update(float delta)
 	{
 		for(int y = 0; y < ground.length; y++)
@@ -63,6 +68,9 @@ public class GridManager
 			o.update(delta);
 	}
 	
+	/**
+	 * Draw all tiles.
+	 */
 	public void draw()
 	{
 		for(int y = 0; y < ground.length; y++)
@@ -76,5 +84,24 @@ public class GridManager
 		
 		for(GridObject o : objects)
 			o.draw();
+	}
+	
+	/**
+	 * Return the tile that was touched.
+	 * @param touch
+	 * @return
+	 */
+	public Tile getTouchedTile(Vector3 touch)
+	{
+		for(int y = 0; y < ground.length; y++)
+		{
+			for(int x = 0; x < ground[0].length; x++)
+			{
+				if(ground[y][x].sprite.getBoundingRectangle().contains(touch.x, touch.y))
+					return ground[y][x];
+			}
+		}
+		
+		return null;
 	}
 }

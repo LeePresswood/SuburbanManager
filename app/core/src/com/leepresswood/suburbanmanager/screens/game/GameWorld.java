@@ -17,14 +17,14 @@ public class GameWorld
 	
 	//Bounds of the camera. These are in relation to the camera's center. Said another way, these are the extreme positions of the camera's movement. You may not move further left than WORLD_LEFT.
 	public int world_total_horizontal, world_total_vertical;
-	private float world_view = 15f;
+	private float world_view = 7f;
 	private float world_left, world_right, world_top, world_bottom;	
 	
 	//Camera zoom variables.
-	private boolean camera_zoom_has_changed;							//Determines if zoom has changed.
-	private float camera_zoom = 0.5f;									//Amount added to the world camera's zoom.
+	public boolean camera_zoom_has_changed;							//Determines if zoom has changed.
+	private float camera_zoom = 0.1f;									//Amount added to the world camera's zoom.
 	private float camera_zoom_jump = 0.25f;							//Amount zoom changes by with each zoom request.
-	private float camera_zoom_max = 20.0f;								//Max amount the player can zoom out.
+	private float camera_zoom_max = 1.0f;								//Max amount the player can zoom out.
 	private float camera_zoom_min = camera_zoom_jump;				//Min amount the player can zoom out. In other words, max zoom in.
 	
 	//Game Objects
@@ -45,13 +45,11 @@ public class GameWorld
 	private void setUpWorld()
 	{		
 		//Set the bounds of the whole world.
-		world_total_horizontal = 50;
-		world_total_vertical = 50;
+		world_total_horizontal = 15;
+		world_total_vertical = 15;
 		
-		//Set the bounds of the camera.
+		//Set the camera.
 		camera = new OrthographicCamera(Gdx.graphics.getWidth() / world_view, Gdx.graphics.getHeight() / world_view);
-		
-		
 		
 		//Calculate the position of the camera.
 		camera.position.x = world_total_horizontal / 2f;
@@ -108,15 +106,15 @@ public class GameWorld
 		
 		//If this moves off the world's bounds, correct it.
 		//X
-		if(camera.position.x > world_left)
+		if(camera.position.x < world_left)
 			camera.position.x = world_left;
-		if(camera.position.x < world_right)
+		else if(camera.position.x > world_right)
 			camera.position.x = world_right;
 		
 		//Y
-		if(camera.position.y > world_bottom)
+		if(camera.position.y < world_bottom)
 			camera.position.y = world_bottom;
-		if(camera.position.y < world_top)
+		else if(camera.position.y > world_top)
 			camera.position.y = world_top;
 		
 		camera.update();
@@ -170,7 +168,7 @@ public class GameWorld
 	}
 	
 	public void draw()
-	{System.out.println(camera.position);
+	{
 		//Game objects
 		screen.batch.setProjectionMatrix(camera.combined);
 		screen.batch.begin();
