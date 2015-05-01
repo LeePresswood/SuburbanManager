@@ -1,9 +1,11 @@
 package com.leepresswood.suburbanmanager.screens.game;
 
 import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.leepresswood.suburbanmanager.screens.game.objects.grid.GridManager;
+import com.leepresswood.suburbanmanager.screens.game.objects.grid.GridObject;
 
 /**
  * Holds information about the game world. Sets up camera based upon this world.
@@ -146,25 +148,23 @@ public class GameWorld
 	 * Delete old objects.
 	 */
 	private void deleteOldObjects()
-	{
-		/*remove = null;
-		
-		//Find old items..
-		for(Spell s : spells)
-			if(!s.active)
-			{
-				if(remove == null)
-					remove = new ArrayList<Object>();				
-				remove.add(s);
+	{		
+		//Find old items.
+		for(GridObject g : manager.objects)
+			if(!g.active)
+			{				
+				remove.add(g);
 			}
 		
 		
 		//Do the actual removal.
 		if(remove != null)
 			for(Object o : remove)
-				;
-				//if(o instanceof Spell)
-				//	spells.remove(o);*/
+				if(o instanceof GridObject)
+					manager.objects.remove(o);
+		
+		//Clear for next remove.
+		remove.clear();
 	}
 	
 	public void draw()

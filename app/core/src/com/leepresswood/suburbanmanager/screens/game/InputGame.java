@@ -2,11 +2,9 @@ package com.leepresswood.suburbanmanager.screens.game;
 
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.leepresswood.suburbanmanager.GameSM;
 import com.leepresswood.suburbanmanager.screens.game.objects.grid.Tile;
 
 public class InputGame implements InputProcessor
@@ -47,7 +45,7 @@ public class InputGame implements InputProcessor
 		{
 			//Must determine if it's on the GUI or the game world.
 			//GUI
-		
+			
 			
 			//Game world
 			Vector3 touch = screen.world.camera.unproject(new Vector3(screenX, screenY, 0));
@@ -57,8 +55,7 @@ public class InputGame implements InputProcessor
 			{
 				touched_tile.setTileTexture(screen.game.assets.get(screen.game.assets.CROSS, Texture.class));
 			}
-		}
-		
+		}		
 		
 		return true;
 	}
@@ -76,8 +73,8 @@ public class InputGame implements InputProcessor
 	public boolean touchDragged(int screenX, int screenY, int pointer)
 	{
 		if(lastTouch.x != -1)
-		{System.out.println(lastTouch);
-			Vector2 diff = new Vector2(screenX, screenY).sub(lastTouch);
+		{
+			Vector2 diff = new Vector2(screenX, screenY).sub(lastTouch).scl(0.05f);
 			screen.world.camera.position.add(diff.x, -diff.y, 0);
 			
 			lastTouch.set(screenX, screenY);

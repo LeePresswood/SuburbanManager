@@ -94,13 +94,9 @@ public class GridManager
 	public Tile getTouchedTile(Vector3 touch)
 	{
 		for(int y = 0; y < ground.length; y++)
-		{
 			for(int x = 0; x < ground[0].length; x++)
-			{
 				if(ground[y][x].sprite.getBoundingRectangle().contains(touch.x, touch.y))
 					return ground[y][x];
-			}
-		}
 		
 		return null;
 	}
