@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.math.Vector3;
 import com.leepresswood.suburbanmanager.screens.game.GameWorld;
+import com.leepresswood.suburbanmanager.screens.game.objects.road.Road;
 
 /**
  * Manages the multiple grids of the world. Manages grid objects as well.
@@ -93,7 +94,11 @@ public class GridManager
 		}
 		else
 		{//No object found. Do correct action on tile.
+			//Add
 			game_objects.put(toGridID(x, y), GridObjectFactory.get(current_object, x, y, this));
+			for(GridObject object : game_objects.values())
+				if(object instanceof Road)
+					((Road) object).updateTexture();
 		}
 	}
 }

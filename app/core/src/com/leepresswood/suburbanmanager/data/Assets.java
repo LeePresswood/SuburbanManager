@@ -40,12 +40,12 @@ public class Assets extends AssetManager
 	public final String ROAD_END_BOT = PATH_ROAD + "(015).png";
 	public final String ROAD_END_RIGHT = PATH_ROAD + "(017).png";
 	public final String ROAD_END_LEFT = PATH_ROAD + "(018).png";
-	public final String ROAD_VERT = PATH_ROAD + "(013).png";
-	public final String ROAD_HORI_WATER_FULL = PATH_ROAD + "(011).png";
-	public final String ROAD_HORI_WATER_PARTIAL = PATH_ROAD + "(012).png";
-	public final String ROAD_VERT_WATER_FULL = PATH_ROAD + "(09).png";
-	public final String ROAD_VERT_WATER_PARTIAL = PATH_ROAD + "(010).png";
-	public final String ROAD_HORI = PATH_ROAD + "(014).png";
+	public final String ROAD_VERT = PATH_ROAD + "(09).png";
+	public final String ROAD_HORI_WATER_FULL = PATH_ROAD + "(013).png";
+	public final String ROAD_HORI_WATER_PARTIAL = PATH_ROAD + "(014).png";
+	public final String ROAD_VERT_WATER_FULL = PATH_ROAD + "(011).png";
+	public final String ROAD_VERT_WATER_PARTIAL = PATH_ROAD + "(012).png";
+	public final String ROAD_HORI = PATH_ROAD + "(010).png";
 	
 	//Terrain
 	public final int NUMBER_TERRAIN = 6;

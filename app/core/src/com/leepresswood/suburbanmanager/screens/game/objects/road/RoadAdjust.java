@@ -24,14 +24,14 @@ public class RoadAdjust
 		
 		//Get all road textures.
 		for(int i = 0; i < assets.NUMBER_ROAD; i++)
-			top.add(assets.PATH_ROAD + "(" + i + ").png");
+			top.add(assets.PATH_ROAD + "(0" + i + ").png");
 		
 		//Prune textures.
 		prune(manager, index, top);
-		
+	if(!top.isEmpty())System.out.println(top.get(0));
 		//Get highest index road remaining. This will be the road that connects to the fewest sides while still hitting everyone.
 		if(!top.isEmpty())
-			return assets.get(top.get(top.size() - 1), Texture.class);
+			return assets.get(top.get(0), Texture.class);
 		
 		//No surrounding roads. Return cross.
 		return assets.get(assets.ROAD_CROSS, Texture.class);
@@ -86,6 +86,9 @@ public class RoadAdjust
 		array.remove(assets.ROAD_VERT);
 		array.remove(assets.ROAD_VERT_LEFT);
 		array.remove(assets.ROAD_VERT_RIGHT);
+		
+		array.remove(assets.ROAD_VERT_WATER_FULL);
+		array.remove(assets.ROAD_VERT_WATER_PARTIAL);
 	}
 	
 	private static void pruneBottom(ArrayList<String> array, Assets assets)
@@ -102,6 +105,9 @@ public class RoadAdjust
 		array.remove(assets.ROAD_VERT);
 		array.remove(assets.ROAD_VERT_LEFT);
 		array.remove(assets.ROAD_VERT_RIGHT);
+		
+		array.remove(assets.ROAD_VERT_WATER_FULL);
+		array.remove(assets.ROAD_VERT_WATER_PARTIAL);
 	}
 	
 	private static void pruneLeft(ArrayList<String> array, Assets assets)
@@ -118,6 +124,9 @@ public class RoadAdjust
 		array.remove(assets.ROAD_HORI_BOT);
 		
 		array.remove(assets.ROAD_VERT_LEFT);
+		
+		array.remove(assets.ROAD_HORI_WATER_FULL);
+		array.remove(assets.ROAD_HORI_WATER_PARTIAL);
 	}
 	
 	private static void pruneRight(ArrayList<String> array, Assets assets)
@@ -134,5 +143,8 @@ public class RoadAdjust
 		array.remove(assets.ROAD_HORI_BOT);
 		      
 		array.remove(assets.ROAD_VERT_RIGHT);
+		
+		array.remove(assets.ROAD_HORI_WATER_FULL);
+		array.remove(assets.ROAD_HORI_WATER_PARTIAL);
 	}
 }
