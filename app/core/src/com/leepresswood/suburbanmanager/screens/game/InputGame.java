@@ -49,12 +49,13 @@ public class InputGame implements InputProcessor
 			
 			//Game world
 			Vector3 touch = screen.world.camera.unproject(new Vector3(screenX, screenY, 0));
-			Tile touched_tile = screen.world.manager.getTouchedTile(touch);
+			System.out.println(touch);
+			/*Tile touched_tile = screen.world.manager.getTouchedTile(touch);
 			
 			if(touched_tile != null)
 			{
 				touched_tile.setTileTexture(screen.game.assets.get(screen.game.assets.CROSS, Texture.class));
-			}
+			}*/
 		}		
 		
 		return true;
