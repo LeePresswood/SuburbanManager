@@ -1,7 +1,5 @@
 package com.leepresswood.suburbanmanager.screens.game;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.leepresswood.suburbanmanager.screens.game.objects.grid.GridManager;
@@ -23,15 +21,14 @@ public class GameWorld
 	private float world_left, world_right, world_top, world_bottom;	
 	
 	//Camera zoom variables.
-	public boolean camera_zoom_has_changed;							//Determines if zoom has changed.
-	private float camera_zoom = 0.1f;									//Amount added to the world camera's zoom.
-	private float camera_zoom_jump = 0.25f;							//Amount zoom changes by with each zoom request.
-	private float camera_zoom_max = 1.0f;								//Max amount the player can zoom out.
-	private float camera_zoom_min = camera_zoom_jump;				//Min amount the player can zoom out. In other words, max zoom in.
+	public boolean camera_zoom_has_changed;									//Determines if zoom has changed.
+	private float camera_zoom = 0.1f;											//Amount added to the world camera's zoom.
+	private float camera_zoom_jump = 0.25f;									//Amount zoom changes by with each zoom request.
+	private float camera_zoom_max = 1.0f;										//Max amount the player can zoom out.
+	private float camera_zoom_min = camera_zoom_jump;						//Min amount the player can zoom out. In other words, max zoom in.
 	
 	//Game Objects
 	public GridManager manager;
-	public ArrayList<Object> remove;
 	
 	public GameWorld(ScreenGame screen)
 	{
@@ -73,8 +70,6 @@ public class GameWorld
 		
 		//Set up highway.
 		
-		
-		remove = new ArrayList<Object>();
 	}
 	
 	public void update(float delta)
@@ -149,22 +144,10 @@ public class GameWorld
 	 */
 	private void deleteOldObjects()
 	{		
-		//Find old items.
-		for(GridObject g : manager.objects)
+		//Find old items and remove.
+		for(GridObject g : manager.game_objects.values())
 			if(!g.active)
-			{				
-				remove.add(g);
-			}
-		
-		
-		//Do the actual removal.
-		if(remove != null)
-			for(Object o : remove)
-				if(o instanceof GridObject)
-					manager.objects.remove(o);
-		
-		//Clear for next remove.
-		remove.clear();
+				manager.game_objects.get(g.index).clear();
 	}
 	
 	public void draw()
