@@ -74,7 +74,7 @@ public class GameWorld
 	
 	public void update(float delta)
 	{
-		
+		manager.update(delta);
 		
 		//Manage the other forces in the world.
 		setCameraBounds();

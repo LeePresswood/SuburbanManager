@@ -29,7 +29,7 @@ public class GridManager
 	 * @param delta Change in time.
 	 */
 	public void update(float delta)
-	{		
+	{
 		for(GridObject o : game_objects.values())
 			o.update(delta);
 	}

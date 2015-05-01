@@ -10,7 +10,7 @@ public class Assets extends AssetManager
 	{		
 		//Textures
 		for(int i = 0; i < NUMBER_ROAD; i++)
-			load(PATH_ROAD + "(" + i + ").png", Texture.class);
+			load(PATH_ROAD + "(0" + i + ").png", Texture.class);
 		for(int i = 0; i < NUMBER_TERRAIN; i++)
 			load(PATH_TERRAIN + "(" + i + ").png", Texture.class);
 		for(int i = 0; i < NUMBER_WATER; i++)
@@ -27,25 +27,25 @@ public class Assets extends AssetManager
 	//Roads
 	public final int NUMBER_ROAD = 19;
 	public final String PATH_ROAD = "tiles/road/";
-	public final String ROAD_CORNER_BOT_RIGHT = PATH_ROAD + "(0).png";
-	public final String ROAD_CORNER_LEFT_BOT = PATH_ROAD + "(1).png";
-	public final String ROAD_VERT_RIGHT = PATH_ROAD + "(2).png";
-	public final String ROAD_VERT_LEFT = PATH_ROAD + "(3).png";
-	public final String ROAD_CROSS = PATH_ROAD + "(4).png";
-	public final String ROAD_CORNER_TOP_RIGHT = PATH_ROAD + "(5).png";
-	public final String ROAD_CORNER_LEFT_TOP = PATH_ROAD + "(6).png";
-	public final String ROAD_HORI_TOP = PATH_ROAD + "(7).png";
-	public final String ROAD_HORI_BOT = PATH_ROAD + "(8).png";
-	public final String ROAD_END_TOP = PATH_ROAD + "(9).png";
-	public final String ROAD_END_BOT = PATH_ROAD + "(10).png";
-	public final String ROAD_END_RIGHT = PATH_ROAD + "(11).png";
-	public final String ROAD_END_LEFT = PATH_ROAD + "(12).png";
-	public final String ROAD_VERT = PATH_ROAD + "(13).png";
-	public final String ROAD_HORI_WATER_FULL = PATH_ROAD + "(14).png";
-	public final String ROAD_HORI_WATER_PARTIAL = PATH_ROAD + "(15).png";
-	public final String ROAD_VERT_WATER_FULL = PATH_ROAD + "(16).png";
-	public final String ROAD_VERT_WATER_PARTIAL = PATH_ROAD + "(17).png";
-	public final String ROAD_HORI = PATH_ROAD + "(18).png";
+	public final String ROAD_CORNER_BOT_RIGHT = PATH_ROAD + "(07).png";
+	public final String ROAD_CORNER_LEFT_BOT = PATH_ROAD + "(08).png";
+	public final String ROAD_VERT_RIGHT = PATH_ROAD + "(01).png";
+	public final String ROAD_VERT_LEFT = PATH_ROAD + "(02).png";
+	public final String ROAD_CROSS = PATH_ROAD + "(00).png";
+	public final String ROAD_CORNER_TOP_RIGHT = PATH_ROAD + "(05).png";
+	public final String ROAD_CORNER_LEFT_TOP = PATH_ROAD + "(06).png";
+	public final String ROAD_HORI_TOP = PATH_ROAD + "(03).png";
+	public final String ROAD_HORI_BOT = PATH_ROAD + "(04).png";
+	public final String ROAD_END_TOP = PATH_ROAD + "(016).png";
+	public final String ROAD_END_BOT = PATH_ROAD + "(015).png";
+	public final String ROAD_END_RIGHT = PATH_ROAD + "(017).png";
+	public final String ROAD_END_LEFT = PATH_ROAD + "(018).png";
+	public final String ROAD_VERT = PATH_ROAD + "(013).png";
+	public final String ROAD_HORI_WATER_FULL = PATH_ROAD + "(011).png";
+	public final String ROAD_HORI_WATER_PARTIAL = PATH_ROAD + "(012).png";
+	public final String ROAD_VERT_WATER_FULL = PATH_ROAD + "(09).png";
+	public final String ROAD_VERT_WATER_PARTIAL = PATH_ROAD + "(010).png";
+	public final String ROAD_HORI = PATH_ROAD + "(014).png";
 	
 	//Terrain
 	public final int NUMBER_TERRAIN = 6;
