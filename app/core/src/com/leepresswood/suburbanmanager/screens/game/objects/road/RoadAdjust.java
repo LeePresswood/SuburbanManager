@@ -28,8 +28,8 @@ public class RoadAdjust
 		
 		//Prune textures.
 		prune(manager, index, top);
-	if(!top.isEmpty())System.out.println(top.get(0));
-		//Get highest index road remaining. This will be the road that connects to the fewest sides while still hitting everyone.
+		
+		//Get lowest index road remaining. This will be the road that connects to the fewest sides while still hitting everyone.
 		if(!top.isEmpty())
 			return assets.get(top.get(0), Texture.class);
 		
@@ -39,35 +39,29 @@ public class RoadAdjust
 	
 	private static void prune(GridManager manager, int index, ArrayList<String> array)
 	{
-		//Get coordinates of the tile. 0 = X and 1 = Y.
-		int[] coord = manager.fromGridID(index);
-		
-		//Get sides of world for easy access.
-		int min_x = 0;
-		int min_y = 0;
-		int max_x = manager.world.world_total_horizontal;
-		int max_y = manager.world.world_total_vertical;
-		
 		Assets assets = manager.world.screen.game.assets;
+		
+		//Get coordinates of the tile. 0 -> X and 1 -> Y.
+		int[] coord = manager.fromGridID(index);
 		
 		//Check side. If not a road, remove all array roads that connect to that side.
 		//Top
-		if(coord[1] + 1 < max_y)
+		if(coord[1] + 1 < manager.world.world_total_vertical)
 			if(manager.game_objects.get(manager.toGridID(coord[0], coord[1] + 1)) == null)
 				pruneTop(array, assets);
 		
 		//Bottom
-		if(coord[1] - 1 >= min_y)
+		if(coord[1] - 1 >= 0)
 			if(manager.game_objects.get(manager.toGridID(coord[0], coord[1] - 1)) == null)
 				pruneBottom(array, assets);
 		
 		//Left
-		if(coord[0] - 1 >= min_x)
+		if(coord[0] - 1 >= 0)
 			if(manager.game_objects.get(manager.toGridID(coord[0] - 1, coord[1])) == null)
 				pruneLeft(array, assets);
 		
 		//Right
-		if(coord[0] + 1 < max_x)
+		if(coord[0] + 1 < manager.world.world_total_horizontal)
 			if(manager.game_objects.get(manager.toGridID(coord[0] + 1, coord[1])) == null)
 				pruneRight(array, assets);
 	}
