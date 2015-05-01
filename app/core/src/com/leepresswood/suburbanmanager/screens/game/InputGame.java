@@ -2,10 +2,8 @@ package com.leepresswood.suburbanmanager.screens.game;
 
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.leepresswood.suburbanmanager.screens.game.objects.grid.Tile;
 
 public class InputGame implements InputProcessor
 {
@@ -48,14 +46,9 @@ public class InputGame implements InputProcessor
 			
 			
 			//Game world
+			//Translate the clicked location to a world x and y. Send click to GridManager.
 			Vector3 touch = screen.world.camera.unproject(new Vector3(screenX, screenY, 0));
-			System.out.println(touch);
-			/*Tile touched_tile = screen.world.manager.getTouchedTile(touch);
-			
-			if(touched_tile != null)
-			{
-				touched_tile.setTileTexture(screen.game.assets.get(screen.game.assets.CROSS, Texture.class));
-			}*/
+			screen.world.manager.clickAt((int) Math.floor(touch.x), (int) Math.floor(touch.y));
 		}		
 		
 		return true;

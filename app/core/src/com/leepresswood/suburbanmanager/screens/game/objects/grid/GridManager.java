@@ -13,14 +13,15 @@ import com.leepresswood.suburbanmanager.screens.game.GameWorld;
 public class GridManager
 {
 	public GameWorld world;
-	
 	public HashMap<Integer, GridObject> game_objects;		//Objects of the grid. Call them through their IDs received by their indices.
+	public GridObjectEnum current_object;
 	
-	public GridManager(GameWorld world)
+	public GridManager(GameWorld world)	
 	{
 		this.world = world;
 		
 		game_objects = new HashMap<Integer, GridObject>();
+		current_object = GridObjectEnum.ROAD;
 	}
 	
 	/**
@@ -75,5 +76,24 @@ public class GridManager
 	public int[] fromGridID(int id)
 	{
 		return new int[]{id % world.world_total_horizontal, id / world.world_total_horizontal};
+	}
+	
+	/**
+	 * Player requested to click object on the grid. Work on grid as necessary.
+	 * @param x X location of click. Translated to grid click.
+	 * @param y Y location of click. Translated to grid click.
+	 */
+	public void clickAt(int x, int y)
+	{
+		//Calling for the world object at x,y will give the item (or nothing if empty).
+		GridObject o = game_objects.get(toGridID(x, y));
+		if(o != null)
+		{//Game object found. Do correct action on object.
+			
+		}
+		else
+		{//No object found. Do correct action on tile.
+			game_objects.put(toGridID(x, y), GridObjectFactory.get(current_object, x, y, this));
+		}
 	}
 }

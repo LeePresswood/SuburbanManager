@@ -45,11 +45,11 @@ public abstract class GridObject
 	
 	protected abstract void makeSprite();
 
-	public void update(float delta)
-	{
-	}
+	public abstract void update(float delta);
 
 	public void draw()
 	{
+		if(sprite != null)
+			sprite.draw(manager.world.screen.batch);
 	}	
 }
