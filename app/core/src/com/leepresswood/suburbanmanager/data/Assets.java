@@ -27,7 +27,7 @@ public class Assets extends AssetManager
 	//Roads
 	public final int NUMBER_ROAD = 19;
 	public final String PATH_ROAD = "tiles/road/";
-	public final String ROAD_CORNER_DOWN_RIGHT = PATH_ROAD + "(0).png";
+	public final String ROAD_CORNER_BOT_RIGHT = PATH_ROAD + "(0).png";
 	public final String ROAD_CORNER_LEFT_BOT = PATH_ROAD + "(1).png";
 	public final String ROAD_VERT_RIGHT = PATH_ROAD + "(2).png";
 	public final String ROAD_VERT_LEFT = PATH_ROAD + "(3).png";
