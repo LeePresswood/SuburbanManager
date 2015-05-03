@@ -110,7 +110,7 @@ public class GridManager
 		if(game_objects.containsKey(toGridID(x, y)))
 		{//Game object found. Do correct action on object.
 			//Delete.
-			game_objects.remove(toGridID(x, y));//, null);
+			game_objects.remove(toGridID(x, y));
 			
 			//Adjust roads.
 			for(GridObject object : game_objects.values())

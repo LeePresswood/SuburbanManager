@@ -148,14 +148,7 @@ public class GameWorld
 	 */
 	private void deleteOldObjects()
 	{		
-		//Find old items and remove.
-		for(Integer i : manager.game_objects.keySet())
-			if(manager.game_objects.get(i) != null && !manager.game_objects.get(i).active)
-				remove.add(i);
 		
-		for(Object o : remove)
-			if(o instanceof Integer)
-				manager.game_objects.put((Integer) o, null);//remove(o);
 	}
 	
 	public void draw()

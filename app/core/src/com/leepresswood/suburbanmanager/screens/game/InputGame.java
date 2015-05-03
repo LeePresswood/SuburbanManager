@@ -10,6 +10,7 @@ public class InputGame implements InputProcessor
 	private ScreenGame screen;
 	
 	private Vector2 lastTouch = new Vector2(-1, -1);
+	private boolean adding;											//While adding, the player can drag across the screen and place multiple roads.
 	
 	public InputGame(ScreenGame screenGame)
 	{
@@ -47,6 +48,7 @@ public class InputGame implements InputProcessor
 			//Translate the clicked location to a world x and y. Send click to GridManager.
 			Vector3 touch = screen.world.camera.unproject(new Vector3(screenX, screenY, 0));
 			screen.world.manager.clickAt((int) Math.floor(touch.x), (int) Math.floor(touch.y));
+			adding = true;
 		}	
 		else if(button == Buttons.MIDDLE)
 		{
@@ -66,8 +68,14 @@ public class InputGame implements InputProcessor
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button)
 	{
-		if(button == Buttons.MIDDLE)
+		if(button == Buttons.LEFT)
+		{
+			adding = false;
+		}
+		else if(button == Buttons.MIDDLE)
+		{
 			lastTouch.set(-1, -1);
+		}
 		
 		return true;
 	}
@@ -75,7 +83,13 @@ public class InputGame implements InputProcessor
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer)
 	{
-		if(lastTouch.x != -1)
+		if(adding)
+		{
+			//Translate the clicked location to a world x and y. Send click to GridManager.
+			Vector3 touch = screen.world.camera.unproject(new Vector3(screenX, screenY, 0));
+			screen.world.manager.clickAt((int) Math.floor(touch.x), (int) Math.floor(touch.y));
+		}
+		else if(lastTouch.x != -1)
 		{
 			Vector2 diff = new Vector2(screenX, screenY).sub(lastTouch).scl(0.05f);
 			screen.world.camera.position.add(diff.x, -diff.y, 0);
