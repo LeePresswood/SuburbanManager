@@ -1,7 +1,6 @@
 package com.leepresswood.suburbanmanager.screens.game.objects.grid;
 
 import java.util.HashMap;
-
 import com.badlogic.gdx.math.Vector3;
 import com.leepresswood.suburbanmanager.screens.game.GameWorld;
 import com.leepresswood.suburbanmanager.screens.game.objects.road.Road;
@@ -32,7 +31,8 @@ public class GridManager
 	public void update(float delta)
 	{
 		for(GridObject o : game_objects.values())
-			o.update(delta);
+			if(o != null && o.active)
+				o.update(delta);
 	}
 	
 	/**
@@ -41,7 +41,8 @@ public class GridManager
 	public void draw()
 	{
 		for(GridObject o : game_objects.values())
-			o.draw();
+			if(o != null && o.active)
+				o.draw();
 	}
 	
 	/**
@@ -87,8 +88,7 @@ public class GridManager
 	public void clickAt(int x, int y)
 	{
 		//Calling for the world object at x,y will give the item (or nothing if empty).
-		GridObject o = game_objects.get(toGridID(x, y));
-		if(o != null)
+		if(game_objects.containsKey(toGridID(x, y)))
 		{//Game object found. Do correct action on object.
 			
 		}
@@ -96,9 +96,30 @@ public class GridManager
 		{//No object found. Do correct action on tile.
 			//Add
 			game_objects.put(toGridID(x, y), GridObjectFactory.get(current_object, x, y, this));
+			
+			//Adjust roads.
 			for(GridObject object : game_objects.values())
 				if(object instanceof Road)
 					((Road) object).updateTexture();
+		}
+	}
+
+	public void deleteAt(int x, int y)
+	{
+		//Calling for the world object at x,y will give the item (or nothing if empty).
+		if(game_objects.containsKey(toGridID(x, y)))
+		{//Game object found. Do correct action on object.
+			//Delete.
+			game_objects.remove(toGridID(x, y));//, null);
+			
+			//Adjust roads.
+			for(GridObject object : game_objects.values())
+				if(object instanceof Road)
+					((Road) object).updateTexture();	
+		}			
+		else
+		{//No object found. Do correct action on tile.
+			
 		}
 	}
 }

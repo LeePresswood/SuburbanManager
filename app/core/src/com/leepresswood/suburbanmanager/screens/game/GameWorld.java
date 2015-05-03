@@ -1,5 +1,6 @@
 package com.leepresswood.suburbanmanager.screens.game;
 
+import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.leepresswood.suburbanmanager.screens.game.objects.grid.GridManager;
@@ -29,6 +30,7 @@ public class GameWorld
 	
 	//Game Objects
 	public GridManager manager;
+	private ArrayList<Object> remove;
 	
 	public GameWorld(ScreenGame screen)
 	{
@@ -36,6 +38,8 @@ public class GameWorld
 		
 		setUpWorld();
 		populateWorld();	
+		
+		remove = new ArrayList<Object>();
 	}
 	
 	/**
@@ -145,9 +149,13 @@ public class GameWorld
 	private void deleteOldObjects()
 	{		
 		//Find old items and remove.
-		for(GridObject g : manager.game_objects.values())
-			if(!g.active)
-				manager.game_objects.get(g.index).clear();
+		for(Integer i : manager.game_objects.keySet())
+			if(manager.game_objects.get(i) != null && !manager.game_objects.get(i).active)
+				remove.add(i);
+		
+		for(Object o : remove)
+			if(o instanceof Integer)
+				manager.game_objects.put((Integer) o, null);//remove(o);
 	}
 	
 	public void draw()

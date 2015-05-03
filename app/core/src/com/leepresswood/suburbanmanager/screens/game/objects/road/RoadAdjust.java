@@ -20,23 +20,30 @@ public class RoadAdjust
 		Assets assets = manager.world.screen.game.assets;
 		
 		//Get an array of possible textures depending upon what is around the road tile.
-		ArrayList<String> top = new ArrayList<String>();		
+		ArrayList<String> array = new ArrayList<String>();		
 		
 		//Get all road textures.
 		for(int i = 0; i < assets.NUMBER_ROAD; i++)
-			top.add(assets.PATH_ROAD + "(0" + i + ").png");
+			array.add(assets.PATH_ROAD + "(0" + i + ").png");
 		
 		//Prune textures.
-		prune(manager, index, top);
+		prune(manager, index, array);
 		
 		//Get lowest index road remaining. This will be the road that connects to the fewest sides while still hitting everyone.
-		if(!top.isEmpty())
-			return assets.get(top.get(0), Texture.class);
+		if(!array.isEmpty())
+			return assets.get(array.get(0), Texture.class);
 		
 		//No surrounding roads. Return cross.
 		return assets.get(assets.ROAD_CROSS, Texture.class);
 	}
 	
+	/**
+	 * Remove road segments that can't be the attaching segment. This is done by checking the squares around this tile and seeing if they are
+	 * road tiles. If they aren't, remove every tile segment that attaches to that direction.
+	 * @param manager
+	 * @param index
+	 * @param array
+	 */
 	private static void prune(GridManager manager, int index, ArrayList<String> array)
 	{
 		Assets assets = manager.world.screen.game.assets;

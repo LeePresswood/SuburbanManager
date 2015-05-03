@@ -37,9 +37,7 @@ public class InputGame implements InputProcessor
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button)
 	{
-		if(button == Buttons.MIDDLE)
-			lastTouch.set(screenX, screenY);
-		else if(button == Buttons.LEFT)
+		if(button == Buttons.LEFT)
 		{
 			//Must determine if it's on the GUI or the game world.
 			//GUI
@@ -49,7 +47,18 @@ public class InputGame implements InputProcessor
 			//Translate the clicked location to a world x and y. Send click to GridManager.
 			Vector3 touch = screen.world.camera.unproject(new Vector3(screenX, screenY, 0));
 			screen.world.manager.clickAt((int) Math.floor(touch.x), (int) Math.floor(touch.y));
-		}		
+		}	
+		else if(button == Buttons.MIDDLE)
+		{
+			lastTouch.set(screenX, screenY);
+		}
+		else if(button == Buttons.RIGHT)
+		{
+			//Delete tile.
+			//Translate the clicked location to a world x and y. Send click to GridManager.
+			Vector3 touch = screen.world.camera.unproject(new Vector3(screenX, screenY, 0));
+			screen.world.manager.deleteAt((int) Math.floor(touch.x), (int) Math.floor(touch.y));
+		}
 		
 		return true;
 	}
