@@ -1,10 +1,8 @@
 package com.leepresswood.suburbanmanager.screens.game;
 
-import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.leepresswood.suburbanmanager.screens.game.objects.grid.GridManager;
-import com.leepresswood.suburbanmanager.screens.game.objects.grid.GridObject;
 
 /**
  * Holds information about the game world. Sets up camera based upon this world.
@@ -16,9 +14,10 @@ public class GameWorld
 	public ScreenGame screen;
 	public OrthographicCamera camera;
 	
-	//Bounds of the camera. These are in relation to the camera's center. Said another way, these are the extreme positions of the camera's movement. You may not move further left than WORLD_LEFT.
+	//Bounds of the camera. These are in relation to the camera's center. Said another way, these are the extreme positions of the camera's movement. You may not move farther left than WORLD_LEFT.
 	public int world_total_horizontal, world_total_vertical;
-	private float world_view = 7f;
+	private int GRID_SIZE = 50;
+	private float world_view = GRID_SIZE / 2f;
 	private float world_left, world_right, world_top, world_bottom;	
 	
 	//Camera zoom variables.
@@ -30,16 +29,13 @@ public class GameWorld
 	
 	//Game Objects
 	public GridManager manager;
-	private ArrayList<Object> remove;
 	
 	public GameWorld(ScreenGame screen)
 	{
 		this.screen = screen;
 		
 		setUpWorld();
-		populateWorld();	
-		
-		remove = new ArrayList<Object>();
+		populateWorld();
 	}
 	
 	/**
@@ -48,9 +44,8 @@ public class GameWorld
 	private void setUpWorld()
 	{		
 		//Set the bounds of the whole world.
-		world_total_horizontal = 15;
-		world_total_vertical = 15;
-		
+		world_total_horizontal = GRID_SIZE;
+		world_total_vertical = GRID_SIZE;
 		//Set the camera.
 		camera = new OrthographicCamera(Gdx.graphics.getWidth() / world_view, Gdx.graphics.getHeight() / world_view);
 		
@@ -59,6 +54,7 @@ public class GameWorld
 		camera.position.y = world_total_vertical / 2f;
 		camera_zoom_has_changed = true;
 		setCameraBounds();
+		camera.update();
 		
 		//Display information.
 		System.out.println("Camera:\n\tPosition: " + camera.position + "\n\tWidth: " + camera.viewportWidth + "\n\tHeight: " + camera.viewportHeight + "\n\tZoom: " + camera.zoom);
@@ -91,7 +87,7 @@ public class GameWorld
 	private void setCameraBounds()
 	{
 		//Any zooming will have an effect on the bounds. Recalculate them if necessary.
-		if(camera_zoom_has_changed)
+		/*if(camera_zoom_has_changed)
 		{
 			//Change the camera's zoom to the new value.
 			camera.zoom = camera_zoom;
@@ -118,7 +114,7 @@ public class GameWorld
 		else if(camera.position.y > world_top)
 			camera.position.y = world_top;
 		
-		camera.update();
+		camera.update();*/
 	}
 	
 	/**
@@ -140,6 +136,8 @@ public class GameWorld
 				camera_zoom = camera_zoom_max;
 		}
 		
+		camera.zoom = camera_zoom;
+		camera.update();
 		camera_zoom_has_changed = true;
 	}
 	

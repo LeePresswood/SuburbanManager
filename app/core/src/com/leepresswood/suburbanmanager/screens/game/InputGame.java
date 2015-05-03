@@ -1,6 +1,7 @@
 package com.leepresswood.suburbanmanager.screens.game;
 
 import com.badlogic.gdx.Input.Buttons;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -91,9 +92,12 @@ public class InputGame implements InputProcessor
 		}
 		else if(lastTouch.x != -1)
 		{
+			//Update camera.
 			Vector2 diff = new Vector2(screenX, screenY).sub(lastTouch).scl(0.05f);
-			screen.world.camera.position.add(diff.x, -diff.y, 0);
+			screen.world.camera.position.add(-diff.x, diff.y, 0);
+			screen.world.camera.update();
 			
+			//Change to new position.
 			lastTouch.set(screenX, screenY);
 		}
 		
@@ -111,7 +115,7 @@ public class InputGame implements InputProcessor
 	@Override
 	public boolean scrolled(int amount)
 	{
-		//screen.world.cameraZoom(amount == -1);
+		screen.world.cameraZoom(amount == -1);
 		return true;
 	}
 	

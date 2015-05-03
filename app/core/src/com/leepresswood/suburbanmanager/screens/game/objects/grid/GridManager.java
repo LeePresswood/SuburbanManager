@@ -12,9 +12,9 @@ import com.leepresswood.suburbanmanager.screens.game.objects.road.Road;
  */
 public class GridManager
 {
-	public GameWorld world;
+	public GameWorld world;											//Instance of world.
 	public HashMap<Integer, GridObject> game_objects;		//Objects of the grid. Call them through their IDs received by their indices.
-	public GridObjectEnum current_object;
+	public GridObjectEnum current_object;						//Current object being added.
 	
 	public GridManager(GameWorld world)	
 	{
