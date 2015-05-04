@@ -12,6 +12,7 @@ public abstract class GridObject
 	public GridManager manager;
 	public int x, y, width, height;
 	public boolean active;
+	public GridObjectEnum type;
 	public Sprite sprite;
 	
 	public int index;

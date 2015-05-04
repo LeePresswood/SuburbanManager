@@ -65,8 +65,11 @@ public class GameWorld
 	 */
 	private void populateWorld()
 	{
-		//Load tiles.
+		//Load tile manager.
 		manager = new GridManager(this);
+		
+		//Populate whole world with grass tiles.
+		manager.init();
 		
 		//Set up highway.
 		

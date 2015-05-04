@@ -1,7 +1,6 @@
 package com.leepresswood.suburbanmanager.screens.game;
 
 import com.badlogic.gdx.Input.Buttons;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -107,9 +106,7 @@ public class InputGame implements InputProcessor
 	@Override
 	public boolean mouseMoved(int screenX, int screenY)
 	{
-		
-		
-		return true;
+		return false;
 	}
 	
 	@Override

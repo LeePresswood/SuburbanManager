@@ -21,6 +21,21 @@ public class GridManager
 		this.world = world;
 		
 		game_objects = new HashMap<Integer, GridObject>();
+	}
+	
+	/**
+	 * In the process of setting up the world, we want to fill the world with grass.
+	 */
+	public void init()
+	{
+		for(int y = 0; y < world.world_total_vertical; y++)
+		{
+			for(int x = 0; x < world.world_total_horizontal; x++)
+			{
+				game_objects.put(toGridID(x, y), GridObjectFactory.get(GridObjectEnum.GRASS, x, y, this));
+			}
+		}	
+		
 		current_object = GridObjectEnum.ROAD;
 	}
 	
@@ -34,9 +49,7 @@ public class GridManager
 		{
 			for(int x = 0; x < world.world_total_horizontal; x++)
 			{
-				GridObject o = game_objects.get(toGridID(x, y));
-				if(o != null && o.active)
-					o.update(delta);
+				game_objects.get(toGridID(x, y)).update(delta);
 			}
 		}			
 	}
@@ -50,9 +63,7 @@ public class GridManager
 		{
 			for(int x = 0; x < world.world_total_horizontal; x++)
 			{
-				GridObject o = game_objects.get(toGridID(x, y));
-				if(o != null && o.active)
-					o.draw();
+				game_objects.get(toGridID(x, y)).draw();
 			}
 		}
 	}
@@ -89,25 +100,15 @@ public class GridManager
 		if(world.isWithin(x, y))
 		{
 			//Calling for the world object at x,y will give the item (or nothing if empty).
-			if(game_objects.containsKey(toGridID(x, y)))
+			if(game_objects.get(toGridID(x, y)).active)
 			{//Game object found. Do correct action on object.
 				
 			}
 			else
 			{//No object found. Do correct action on tile.
-				//Add
+				//Add and adjust roads.
 				game_objects.put(toGridID(x, y), GridObjectFactory.get(current_object, x, y, this));
-				
-				//Adjust roads.
-				for(int j = 0; j < world.world_total_vertical; j++)
-				{
-					for(int i = 0; i < world.world_total_horizontal; i++)
-					{
-						GridObject o = game_objects.get(toGridID(i, j));
-						if(o instanceof Road)
-							((Road) o).updateTexture();
-					}
-				}
+				adjustRoads();
 			}
 		}		
 	}
@@ -118,19 +119,31 @@ public class GridManager
 		if(world.isWithin(x, y))
 		{
 			//Calling for the world object at x,y will give the item (or nothing if empty).
-			if(game_objects.containsKey(toGridID(x, y)))
+			if(game_objects.get(toGridID(x, y)).active)
 			{//Game object found. Do correct action on object.
-				//Delete.
-				game_objects.remove(toGridID(x, y));
-				
-				//Adjust roads.
-				for(GridObject object : game_objects.values())
-					if(object instanceof Road)
-						((Road) object).updateTexture();	
+				//Delete and adjust roads.
+				game_objects.put(toGridID(x, y), GridObjectFactory.get(GridObjectEnum.GRASS, x, y, this));
+				adjustRoads();
 			}			
 			else
 			{//No object found. Do correct action on tile.
 				
+			}
+		}
+	}
+	
+	/**
+	 * Go through every tile and find the roads. Adjust the roads to represent the new state of the map.
+	 */
+	private void adjustRoads()
+	{
+		for(int j = 0; j < world.world_total_vertical; j++)
+		{
+			for(int i = 0; i < world.world_total_horizontal; i++)
+			{
+				GridObject o = game_objects.get(toGridID(i, j));
+				if(o instanceof Road)
+					((Road) o).updateTexture();
 			}
 		}
 	}

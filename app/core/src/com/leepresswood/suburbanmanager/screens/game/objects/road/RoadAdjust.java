@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Texture;
 import com.leepresswood.suburbanmanager.data.Assets;
 import com.leepresswood.suburbanmanager.screens.game.objects.grid.GridManager;
+import com.leepresswood.suburbanmanager.screens.game.objects.grid.GridObjectEnum;
 
 
 public class RoadAdjust
@@ -55,22 +56,22 @@ public class RoadAdjust
 		//Check side. If not a road, remove all array roads that connect to that side.
 		//Top
 		if(coord[1] + 1 < manager.world.world_total_vertical)
-			if(manager.game_objects.get(manager.toGridID(coord[0], coord[1] + 1)) == null)
+			if(manager.game_objects.get(manager.toGridID(coord[0], coord[1] + 1)).type != GridObjectEnum.ROAD)
 				pruneTop(array, assets);
 		
 		//Bottom
 		if(coord[1] - 1 >= 0)
-			if(manager.game_objects.get(manager.toGridID(coord[0], coord[1] - 1)) == null)
+			if(manager.game_objects.get(manager.toGridID(coord[0], coord[1] - 1)).type != GridObjectEnum.ROAD)
 				pruneBottom(array, assets);
 		
 		//Left
 		if(coord[0] - 1 >= 0)
-			if(manager.game_objects.get(manager.toGridID(coord[0] - 1, coord[1])) == null)
+			if(manager.game_objects.get(manager.toGridID(coord[0] - 1, coord[1])).type != GridObjectEnum.ROAD)
 				pruneLeft(array, assets);
 		
 		//Right
 		if(coord[0] + 1 < manager.world.world_total_horizontal)
-			if(manager.game_objects.get(manager.toGridID(coord[0] + 1, coord[1])) == null)
+			if(manager.game_objects.get(manager.toGridID(coord[0] + 1, coord[1])).type != GridObjectEnum.ROAD)
 				pruneRight(array, assets);
 	}
 	

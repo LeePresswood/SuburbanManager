@@ -2,12 +2,15 @@ package com.leepresswood.suburbanmanager.screens.game.objects.road;
 
 import com.leepresswood.suburbanmanager.screens.game.objects.grid.GridManager;
 import com.leepresswood.suburbanmanager.screens.game.objects.grid.GridObject;
+import com.leepresswood.suburbanmanager.screens.game.objects.grid.GridObjectEnum;
 
 public class Road extends GridObject
 {
 	public Road(GridManager manager, int x, int y)
 	{
-		super(manager, x, y);		
+		super(manager, x, y);
+		
+		type = GridObjectEnum.ROAD;
 	}
 
 	@Override

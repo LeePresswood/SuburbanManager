@@ -1,5 +1,6 @@
 package com.leepresswood.suburbanmanager.screens.game.objects.grid;
 
+import com.leepresswood.suburbanmanager.screens.game.objects.grid.tiles.GrassTile;
 import com.leepresswood.suburbanmanager.screens.game.objects.road.Road;
 
 /**
@@ -13,6 +14,8 @@ public class GridObjectFactory
 	{		
 		switch(type)
 		{
+			case GRASS:
+				return new GrassTile(manager, x, y);
 			case ROAD:
 				return new Road(manager, x, y);
 			default:
