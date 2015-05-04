@@ -157,4 +157,9 @@ public class GameWorld
 			manager.draw();
 		screen.batch.end();
 	}
+	
+	public boolean isWithin(int x, int y)
+	{
+		return x < world_total_horizontal && x >= 0 && y < world_total_vertical && y >= 0;
+	}
 }
