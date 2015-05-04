@@ -1,7 +1,6 @@
 package com.leepresswood.suburbanmanager.screens.game.objects.grid;
 
 import java.util.HashMap;
-import com.badlogic.gdx.math.Vector3;
 import com.leepresswood.suburbanmanager.screens.game.GameWorld;
 import com.leepresswood.suburbanmanager.screens.game.objects.road.Road;
 
@@ -13,6 +12,7 @@ import com.leepresswood.suburbanmanager.screens.game.objects.road.Road;
 public class GridManager
 {
 	public GameWorld world;											//Instance of world.
+	
 	public HashMap<Integer, GridObject> game_objects;		//Objects of the grid. Call them through their IDs received by their indices.
 	public GridObjectEnum current_object;						//Current object being added.
 	
@@ -30,9 +30,15 @@ public class GridManager
 	 */
 	public void update(float delta)
 	{
-		for(GridObject o : game_objects.values())
-			if(o != null && o.active)
-				o.update(delta);
+		for(int y = 0; y < world.world_total_vertical; y++)
+		{
+			for(int x = 0; x < world.world_total_horizontal; x++)
+			{
+				GridObject o = game_objects.get(toGridID(x, y));
+				if(o != null && o.active)
+					o.update(delta);
+			}
+		}			
 	}
 	
 	/**
@@ -40,23 +46,15 @@ public class GridManager
 	 */
 	public void draw()
 	{
-		for(GridObject o : game_objects.values())
-			if(o != null && o.active)
-				o.draw();
-	}
-	
-	/**
-	 * Return the object that was touched.
-	 * @param touch
-	 * @return
-	 */
-	public GridObject getTouchedTile(Vector3 touch)
-	{
-		for(GridObject o : game_objects.values())
-			if(o.sprite.getBoundingRectangle().contains(touch.x, touch.y))
-				return o;
-		
-		return null;
+		for(int y = 0; y < world.world_total_vertical; y++)
+		{
+			for(int x = 0; x < world.world_total_horizontal; x++)
+			{
+				GridObject o = game_objects.get(toGridID(x, y));
+				if(o != null && o.active)
+					o.draw();
+			}
+		}
 	}
 	
 	/**
@@ -87,39 +85,53 @@ public class GridManager
 	 */
 	public void clickAt(int x, int y)
 	{
-		//Calling for the world object at x,y will give the item (or nothing if empty).
-		if(game_objects.containsKey(toGridID(x, y)))
-		{//Game object found. Do correct action on object.
-			
-		}
-		else
-		{//No object found. Do correct action on tile.
-			//Add
-			game_objects.put(toGridID(x, y), GridObjectFactory.get(current_object, x, y, this));
-			
-			//Adjust roads.
-			for(GridObject object : game_objects.values())
-				if(object instanceof Road)
-					((Road) object).updateTexture();
-		}
+		//Click must be within world bounds.
+		if(world.isWithin(x, y))
+		{
+			//Calling for the world object at x,y will give the item (or nothing if empty).
+			if(game_objects.containsKey(toGridID(x, y)))
+			{//Game object found. Do correct action on object.
+				
+			}
+			else
+			{//No object found. Do correct action on tile.
+				//Add
+				game_objects.put(toGridID(x, y), GridObjectFactory.get(current_object, x, y, this));
+				
+				//Adjust roads.
+				for(int j = 0; j < world.world_total_vertical; j++)
+				{
+					for(int i = 0; i < world.world_total_horizontal; i++)
+					{
+						GridObject o = game_objects.get(toGridID(i, j));
+						if(o instanceof Road)
+							((Road) o).updateTexture();
+					}
+				}
+			}
+		}		
 	}
 
 	public void deleteAt(int x, int y)
 	{
-		//Calling for the world object at x,y will give the item (or nothing if empty).
-		if(game_objects.containsKey(toGridID(x, y)))
-		{//Game object found. Do correct action on object.
-			//Delete.
-			game_objects.remove(toGridID(x, y));
-			
-			//Adjust roads.
-			for(GridObject object : game_objects.values())
-				if(object instanceof Road)
-					((Road) object).updateTexture();	
-		}			
-		else
-		{//No object found. Do correct action on tile.
-			
+		//Click must be within world bounds.
+		if(world.isWithin(x, y))
+		{
+			//Calling for the world object at x,y will give the item (or nothing if empty).
+			if(game_objects.containsKey(toGridID(x, y)))
+			{//Game object found. Do correct action on object.
+				//Delete.
+				game_objects.remove(toGridID(x, y));
+				
+				//Adjust roads.
+				for(GridObject object : game_objects.values())
+					if(object instanceof Road)
+						((Road) object).updateTexture();	
+			}			
+			else
+			{//No object found. Do correct action on tile.
+				
+			}
 		}
 	}
 }
